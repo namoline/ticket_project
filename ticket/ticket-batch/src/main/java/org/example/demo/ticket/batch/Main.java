@@ -3,7 +3,10 @@ package org.example.demo.ticket.batch;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.example.demo.ticket.business.ManagerFactory;
 import org.example.demo.ticket.model.exception.TechnicalException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 /**
@@ -32,7 +35,17 @@ public class Main {
             String vTraitementId = pArgs[0];
             if ("ExportTicketStatus".equals(vTraitementId)) {
                 LOGGER.info("Execution du traitement : ExportTicketStatus");
-                // ...
+                
+                ApplicationContext vApplicationContext
+                = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
+
+            // Il est possible de récupérer un bean dans ce contexte :
+            ManagerFactory vManagerFactory
+                = vApplicationContext.getBean("managerFactory", ManagerFactory.class);
+
+            // suite de l'implémentation des batches...
+                
+                
             } else {
                 throw new TechnicalException("Traitement inconnu : " + vTraitementId);
             }
